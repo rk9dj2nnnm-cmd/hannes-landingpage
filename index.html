@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hannes – Websites mit KI-Unterstützung</title>
+<meta name="description" content="Moderne, schnelle Websites für kleine Unternehmen und Selbstständige – gebaut mit KI-Unterstützung, schneller und günstiger als klassische Agenturen.">
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg-soft: #f9fafb;
+    --text: #111827;
+    --text-muted: #4b5563;
+    --border: #e5e7eb;
+    --accent: #2563eb;
+    --accent-dark: #1d4ed8;
+    --accent-soft: #eff6ff;
+    --radius: 14px;
+    --max-width: 1080px;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  .container {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* Header / Nav */
+  header {
+    position: sticky;
+    top: 0;
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    z-index: 10;
+  }
+
+  nav {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 16px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo {
+    font-weight: 700;
+    font-size: 1.1rem;
+    letter-spacing: -0.02em;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 28px;
+    font-size: 0.95rem;
+    font-weight: 500;
+  }
+
+  .nav-links a {
+    color: var(--text-muted);
+    transition: color 0.15s ease;
+  }
+
+  .nav-links a:hover { color: var(--accent); }
+
+  @media (max-width: 640px) {
+    .nav-links { display: none; }
+  }
+
+  /* Hero */
+  .hero {
+    padding: 96px 24px 80px;
+    text-align: center;
+    background: linear-gradient(180deg, var(--bg-soft) 0%, var(--bg) 100%);
+  }
+
+  .hero .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--accent-soft);
+    color: var(--accent-dark);
+    font-size: 0.9rem;
+    font-weight: 600;
+    padding: 6px 16px 6px 6px;
+    border-radius: 999px;
+    margin-bottom: 24px;
+  }
+
+  .hero .eyebrow img {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center 15%;
+    display: block;
+  }
+
+  .hero h1 {
+    font-size: clamp(2.2rem, 5vw, 3.4rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin: 0 0 20px;
+    max-width: 760px;
+    margin-inline: auto;
+  }
+
+  .hero h1 span {
+    color: var(--accent);
+  }
+
+  .hero p {
+    font-size: 1.15rem;
+    color: var(--text-muted);
+    max-width: 560px;
+    margin: 0 auto 36px;
+  }
+
+  .cta-group {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 14px 28px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+    border: 1px solid transparent;
+    cursor: pointer;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #ffffff;
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);
+  }
+
+  .btn-primary:hover {
+    background: var(--accent-dark);
+    transform: translateY(-1px);
+  }
+
+  .btn-secondary {
+    background: var(--bg);
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  /* Sections */
+  section {
+    padding: 80px 24px;
+  }
+
+  section.soft {
+    background: var(--bg-soft);
+  }
+
+  .section-header {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto 48px;
+  }
+
+  .section-header .tag {
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .section-header h2 {
+    font-size: clamp(1.8rem, 3.5vw, 2.4rem);
+    letter-spacing: -0.02em;
+    margin: 10px 0 12px;
+  }
+
+  .section-header p {
+    color: var(--text-muted);
+    font-size: 1.05rem;
+  }
+
+  /* About */
+  .about-wrap {
+    display: flex;
+    gap: 48px;
+    align-items: center;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    flex-wrap: wrap;
+  }
+
+  .about-avatar {
+    flex-shrink: 0;
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(37, 99, 235, 0.25);
+    border: 4px solid var(--bg);
+  }
+
+  .about-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 15%;
+    display: block;
+  }
+
+  .about-text {
+    flex: 1;
+    min-width: 280px;
+  }
+
+  .about-text h2 {
+    font-size: 1.8rem;
+    margin: 0 0 16px;
+    letter-spacing: -0.02em;
+  }
+
+  .about-text p {
+    color: var(--text-muted);
+    font-size: 1.05rem;
+    margin: 0 0 12px;
+  }
+
+  /* Services */
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px;
+    max-width: var(--max-width);
+    margin: 0 auto;
+  }
+
+  .service-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 32px 28px;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .service-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(17, 24, 39, 0.08);
+  }
+
+  .service-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    background: var(--accent-soft);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    margin-bottom: 18px;
+  }
+
+  .service-card h3 {
+    font-size: 1.2rem;
+    margin: 0 0 10px;
+  }
+
+  .service-card p {
+    color: var(--text-muted);
+    font-size: 0.98rem;
+    margin: 0;
+  }
+
+  /* Project */
+  .projects-list {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .project-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @media (max-width: 720px) {
+    .project-card { grid-template-columns: 1fr; }
+  }
+
+  .project-visual {
+    background: linear-gradient(135deg, #2563eb 0%, #60a5fa 60%, #93c5fd 100%);
+    min-height: 220px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px;
+  }
+
+  .project-visual-emoji {
+    font-size: 5rem;
+  }
+
+  .project-info {
+    padding: 36px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .project-info .label {
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 8px;
+  }
+
+  .project-info h3 {
+    font-size: 1.5rem;
+    margin: 0 0 12px;
+  }
+
+  .project-info p {
+    color: var(--text-muted);
+    margin: 0 0 20px;
+  }
+
+  .project-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 600;
+    color: var(--accent);
+  }
+
+  .project-link:hover { color: var(--accent-dark); }
+
+  /* Contact */
+  .contact-box {
+    max-width: 560px;
+    margin: 0 auto;
+    text-align: center;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 48px 36px;
+  }
+
+  .contact-box h2 {
+    font-size: 1.8rem;
+    margin: 0 0 12px;
+    letter-spacing: -0.02em;
+  }
+
+  .contact-box p {
+    color: var(--text-muted);
+    margin: 0 0 28px;
+  }
+
+  .contact-cta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+  }
+
+  /* Footer */
+  footer {
+    padding: 32px 24px;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    border-top: 1px solid var(--border);
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <div class="logo">Hannes</div>
+    <div class="nav-links">
+      <a href="#ueber-mich">Über mich</a>
+      <a href="#leistungen">Leistungen</a>
+      <a href="#projekt">Projekt</a>
+      <a href="#kontakt">Kontakt</a>
+    </div>
+  </nav>
+</header>
+
+<section class="hero" id="hero">
+  <div class="container">
+    <span class="eyebrow"><img src="foto.jpg" alt="Hannes">Hi, ich bin Hannes 👋</span>
+    <h1>Moderne Websites für <span>kleine Unternehmen</span> – schneller und günstiger gebaut</h1>
+    <p>Ich bin Webentwickler aus Hamburg und baue mit KI-gestützten Tools professionelle Websites in kürzerer Zeit und zu fairen Preisen – ohne Agentur-Overhead. Lern mich kennen und lass uns über dein Projekt sprechen.</p>
+    <div class="cta-group">
+      <a href="https://calendly.com/jo-ludwig/neues-meeting" target="_blank" rel="noopener" class="btn btn-primary">📅 Termin buchen</a>
+      <a href="#projekt" class="btn btn-secondary">Beispielprojekt ansehen</a>
+    </div>
+  </div>
+</section>
+
+<section id="ueber-mich">
+  <div class="container">
+    <div class="about-wrap">
+      <div class="about-avatar"><img src="foto.jpg" alt="Hannes"></div>
+      <div class="about-text">
+        <h2>Über mich</h2>
+        <p>Hey, ich bin Hannes – ich lebe in Hamburg und baue Websites und einfache Web-Apps für kleine Unternehmen und Selbstständige. Kein Großraumbüro, keine Warteschlange: Du sprichst direkt mit mir – der Person, die deine Seite auch baut.</p>
+        <p>Durch den Einsatz moderner KI-Tools im Entwicklungsprozess kann ich Projekte deutlich schneller umsetzen als klassische Agenturen – das gebe ich direkt an dich weiter: schnellere Lieferzeiten, faire Preise und kurze Kommunikationswege, ohne Abstriche bei Qualität oder Design.</p>
+        <p>Am liebsten arbeite ich mit Leuten, die ein klares Anliegen haben und eine Website wollen, die wirklich zu ihnen passt – statt einer von der Stange.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="leistungen" class="soft">
+  <div class="container">
+    <div class="section-header">
+      <span class="tag">Leistungen</span>
+      <h2>Was ich für dich bauen kann</h2>
+      <p>Drei Angebote, zugeschnitten auf den Bedarf kleiner Unternehmen und Selbstständiger.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">🚀</div>
+        <h3>Landingpage</h3>
+        <p>Eine einzelne, fokussierte Seite, die dein Angebot klar kommuniziert und Besucher zu Kunden macht. Ideal für Produkte, Dienstleistungen oder Events.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🗂️</div>
+        <h3>Portfolio-Seite</h3>
+        <p>Präsentiere dich, deine Projekte oder dein Unternehmen professionell online – übersichtlich, modern und auf allen Geräten gut lesbar.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">⚙️</div>
+        <h3>Einfache Web-App</h3>
+        <p>Kleine, interaktive Anwendungen für konkrete Probleme – z.B. Buchungsformulare, Rechner oder Tools, die deinen Arbeitsalltag erleichtern.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projekt">
+  <div class="container">
+    <div class="section-header">
+      <span class="tag">Beispielprojekte</span>
+      <h2>Das habe ich schon gebaut</h2>
+      <p>Zwei Beispiele dafür, wie ich Ideen schnell in fertige, funktionierende Seiten umsetze.</p>
+    </div>
+    <div class="projects-list">
+      <div class="project-card">
+        <div class="project-visual">
+          <span class="project-visual-emoji">📓</span>
+        </div>
+        <div class="project-info">
+          <span class="label">Web-App</span>
+          <h3>Gefühlslogbuch</h3>
+          <p>Eine Web-App zum Festhalten und Reflektieren der eigenen Stimmung im Alltag – mit hierarchischer Mehrfachauswahl von Gefühlen und lokaler Speicherung direkt im Browser.</p>
+          <a class="project-link" href="https://rk9dj2nnnm-cmd.github.io/gefuehlslogbuch/" target="_blank" rel="noopener">
+            Live-Demo ansehen →
+          </a>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-visual">
+          <span class="project-visual-emoji">🖥️</span>
+        </div>
+        <div class="project-info">
+          <span class="label">Landingpage</span>
+          <h3>Diese Seite</h3>
+          <p>Genau die Seite, auf der du gerade liest – eine schnelle, moderne Landingpage, komplett mit KI-Unterstützung gebaut und auf GitHub Pages veröffentlicht.</p>
+          <a class="project-link" href="#hero">Selbst gesehen →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="kontakt" class="soft">
+  <div class="container">
+    <div class="contact-box">
+      <h2>Lass uns sprechen</h2>
+      <p>Du hast eine Idee für eine Website oder Web-App? Buch dir direkt einen kurzen, kostenlosen Termin.</p>
+      <div class="contact-cta">
+        <a href="https://calendly.com/jo-ludwig/neues-meeting" target="_blank" rel="noopener" class="btn btn-primary">📅 Termin buchen</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  &copy; 2026 Hannes · Hamburg
+</footer>
+
+</body>
+</html>
