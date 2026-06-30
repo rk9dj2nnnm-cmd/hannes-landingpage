@@ -619,34 +619,22 @@
     const btn     = document.getElementById('gate-btn');
     const err     = document.getElementById('gate-error');
 
+    const CODE = 'HANNES';
+
     if (localStorage.getItem('landingpage_gate') === 'passed') {
       overlay.classList.add('hidden');
       return;
     }
 
-    async function tryCode() {
+    function tryCode() {
       const code = input.value.trim();
       if (!code) return;
-      btn.disabled = true;
-      err.textContent = '';
-      try {
-        const res  = await fetch('/api/check-access', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ code }),
-        });
-        const data = await res.json();
-        if (data.valid) {
-          localStorage.setItem('landingpage_gate', 'passed');
-          overlay.classList.add('hidden');
-        } else {
-          err.textContent = 'Falscher Code.';
-          input.select();
-        }
-      } catch {
-        err.textContent = 'Fehler – bitte nochmal versuchen.';
-      } finally {
-        btn.disabled = false;
+      if (code.toUpperCase() === CODE) {
+        localStorage.setItem('landingpage_gate', 'passed');
+        overlay.classList.add('hidden');
+      } else {
+        err.textContent = 'Falscher Code.';
+        input.select();
       }
     }
 
