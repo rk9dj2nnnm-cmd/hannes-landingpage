@@ -403,9 +403,96 @@
     font-size: 0.9rem;
     border-top: 1px solid var(--border);
   }
+
+  /* Gate */
+  #gate-overlay {
+    position: fixed;
+    inset: 0;
+    background: var(--bg-soft);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+  #gate-overlay.hidden { display: none; }
+  .gate-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 48px 36px;
+    width: 100%;
+    max-width: 380px;
+    text-align: center;
+    box-shadow: 0 8px 32px rgba(17,24,39,0.08);
+  }
+  .gate-title {
+    font-size: 1.6rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin: 0 0 8px;
+    color: var(--text);
+  }
+  .gate-sub {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin: 0 0 28px;
+    line-height: 1.5;
+  }
+  .gate-input {
+    width: 100%;
+    background: var(--bg-soft);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--text);
+    font-family: inherit;
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 14px 16px;
+    outline: none;
+    transition: border-color 0.2s;
+    box-sizing: border-box;
+  }
+  .gate-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(37,99,235,0.12); }
+  .gate-btn {
+    margin-top: 16px;
+    width: 100%;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 14px;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s;
+    box-shadow: 0 4px 14px rgba(37,99,235,0.3);
+  }
+  .gate-btn:hover { background: var(--accent-dark); transform: translateY(-1px); }
+  .gate-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+  .gate-error {
+    margin-top: 12px;
+    font-size: 0.88rem;
+    color: #dc2626;
+    min-height: 1.2em;
+  }
 </style>
 </head>
 <body>
+
+<div id="gate-overlay">
+  <div class="gate-card">
+    <p class="gate-title">Hannes</p>
+    <p class="gate-sub">Diese Seite ist gerade nur auf Einladung zugänglich.</p>
+    <input class="gate-input" id="gate-code" type="text" autocomplete="off" placeholder="CODE" maxlength="20" />
+    <button class="gate-btn" id="gate-btn">Weiter</button>
+    <p class="gate-error" id="gate-error"></p>
+  </div>
+</div>
 
 <header>
   <nav>
@@ -524,5 +611,48 @@
   &copy; 2026 Hannes · Hamburg
 </footer>
 
+
+<script>
+  (function() {
+    const overlay = document.getElementById('gate-overlay');
+    const input   = document.getElementById('gate-code');
+    const btn     = document.getElementById('gate-btn');
+    const err     = document.getElementById('gate-error');
+
+    if (localStorage.getItem('landingpage_gate') === 'passed') {
+      overlay.classList.add('hidden');
+      return;
+    }
+
+    async function tryCode() {
+      const code = input.value.trim();
+      if (!code) return;
+      btn.disabled = true;
+      err.textContent = '';
+      try {
+        const res  = await fetch('/api/check-access', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ code }),
+        });
+        const data = await res.json();
+        if (data.valid) {
+          localStorage.setItem('landingpage_gate', 'passed');
+          overlay.classList.add('hidden');
+        } else {
+          err.textContent = 'Falscher Code.';
+          input.select();
+        }
+      } catch {
+        err.textContent = 'Fehler – bitte nochmal versuchen.';
+      } finally {
+        btn.disabled = false;
+      }
+    }
+
+    btn.addEventListener('click', tryCode);
+    input.addEventListener('keydown', e => { if (e.key === 'Enter') tryCode(); });
+  })();
+</script>
 </body>
 </html>
